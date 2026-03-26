@@ -1,0 +1,41 @@
+<!DOCTYPE div SYSTEM 'template-assento.dtd'>
+
+<div type="year" n="1927">
+    <head> 1927 </head>
+    <list type="records">
+        <entry n="2">
+            <persName id="y1927e002" type="deceased">
+                <!--y=year and e=entry, so id=y1927e002 identifies the second entry in the deceased records of the year 1927-->
+                <forename>Martha</forename>
+                <surname>da<lb/>Conceição</surname>
+            </persName>
+            <p>
+                <death when="1927-01-08">No dia oito do mez de janeiro do anno de mil nove <lb/>
+                    centos e vinte e sete, n’uma casa do <placeName>logar do Outeiro</placeName><lb/>
+                    <placeName type="parish" id="FSDF">freguesia de São Domingos de
+                        Favaios</placeName>, <placeName type="deaconry">Arciprestado <lb/> de
+                        Alijó</placeName> , <placeName type="diocese">Diocese de Villa
+                        Real</placeName>, falleceu, <sacraments value="no">sem poder <lb/> receber
+                        os Sacramentos da Santa Egreja</sacraments></death> , <ptr
+                    target="y1927e002">Martha <lb/> da Conceição</ptr>, <state type="civil-status"
+                    >solteira</state>, <occupation>jornaleira</occupation>, de <age unit="years"
+                    value="66">sessenta e <lb/> seis annos d’edade</age>, <birthPlace><ptr
+                        target="FSDF">natural</ptr></birthPlace> e <residence>residente <ptr
+                        target="FSDF">n’esta <lb/> freguesia</ptr></residence>, <relation
+                    type="parent" legitimate="no" active="FSDF" passive="y1927e002">filha illegitima
+                    de <persName id="MR">
+                        <forename>Maria</forename>
+                        <surname>Rosa</surname>
+                    </persName></relation>. <funeral when="1927-01-09" catholic="yes">Foi <lb/>
+                    sepultada catholicamente no cemiterio d’esta <lb/> freguesia aos nove dias do
+                    mez e anno corrente</funeral>. 
+            </p>
+            <signed rend="italic">O Parocho <persName role="priest">
+                    <forename>Alberto</forename>
+                    <surname>Fernandes</surname>
+                    <surname>Capella</surname>
+                </persName>
+            </signed>
+        </entry>
+    </list>
+</div>
