@@ -1,0 +1,48 @@
+name: Automated Data Pipeline
+
+# 1. THE TRIGGER: When should this robot wake up?
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/manuscript.xml' # Only run if the XML file was changed!
+
+# 2. THE PERMISSIONS: Give the robot permission to write files back to your repo
+permissions:
+  contents: write
+
+# 3. THE JOBS: What exactly should the robot do?
+jobs:
+  build-and-update:
+    runs-on: ubuntu-latest # Boot up a fresh Linux server
+
+    steps:
+      # Step A: Download your repository's code onto the server
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step B: Install the Node.js 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Step C: Install your XML parser library
+      - name: Install dependencies
+        run: npm install fast-xml-parser
+
+      # Step D: Run your script (Bake the cake)
+      - name: Run transformation script
+        run: node scripts/build.js
+
+      # Step E: Save the generated files back to GitHub
+      - name: Commit and push generated JSON
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add public/data/manuscript.json public/data/version.json
+          
+          # This line ensures it only commits if the JSON actually changed
+          git diff --quiet && git diff --staged --quiet || git commit -m "🤖 Auto-generated JSON from latest XML update"
+          git push
