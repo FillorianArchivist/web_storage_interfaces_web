@@ -32,3 +32,45 @@ async function loadData() {
         console.error("Failed to load manuscript:", error);
     }
 }
+
+function renderWebsite(data) {
+    // 1. Update the static title
+    document.getElementById('manuscript-title').innerText = data.title;
+
+    // 2. Grab the empty container
+    const container = document.getElementById('manuscript-container');
+    let htmlContent = ""; // Start with an empty string
+
+    // 3. Loop through the JSON array
+    data.paragraphs.forEach(paragraph => {
+        
+        // We create HTML classes that match what we designed in Figma
+        htmlContent += `
+            <div class="paragraph-block" id="${paragraph.id}">
+                <p class="manuscript-text">${paragraph.text}</p>
+        `;
+
+        // If this paragraph has an annotation in the JSON, add the UI for it
+        if (paragraph.note) {
+            htmlContent += `
+                <aside class="margin-note">
+                    <span class="note-icon">📝</span>
+                    <span class="note-text">${paragraph.note}</span>
+                </aside>
+            `;
+        }
+
+        // Close the paragraph-block div
+        htmlContent += `</div>`; 
+    });
+
+    // 4. Inject all the generated HTML into the page at once
+    container.innerHTML = htmlContent;
+}
+
+// Update our previous initialization call to use this function:
+loadData().then(data => {
+    if (data) {
+        renderWebsite(data);
+    }
+});
