@@ -1,65 +1,91 @@
 import xmltodict
 import json
 import os
-import hashlib
+import glob
 from lxml import etree
-import sys
 
-# Define file paths
-XML_PATH = './data/manuscript.xml'
-DTD_PATH = './data/schema.dtd'
-JSON_OUT = './public/data/manuscript.json'
-VERSION_OUT = './public/data/version.json'
+def process_archive_pipeline():
+    print("Iniciando o Pipeline de Dados Jamstack...\n")
 
-def build_pipeline():
-    print("Starting Data Pipeline...")
+    # ==========================================
+    # 1. Configuração de Caminhos (Paths)
+    # ==========================================
+    # Assumimos que este script está dentro da pasta /backend
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    XML_DIR = os.path.join(BASE_DIR, 'xml_raw')
+    DTD_PATH = os.path.join(BASE_DIR, 'schema.dtd')
+    
+    # O Output vai navegar "para cima e para o lado" até à pasta pública do Frontend
+    FRONTEND_DATA_DIR = os.path.join(BASE_DIR, '..', 'frontend', 'public', 'data')
+    JSON_OUTPUT_PATH = os.path.join(FRONTEND_DATA_DIR, 'manuscritos.json')
 
-    # Step 1: Strict Validation
+    # Garantir que as pastas existem
+    os.makedirs(XML_DIR, exist_ok=True)
+    os.makedirs(FRONTEND_DATA_DIR, exist_ok=True)
+
+    # Carregar as regras de validação (DTD)
     try:
-        with open(DTD_PATH, 'rb') as dtd_file:
+        with open(DTD_PATH, 'r', encoding='utf-8') as dtd_file:
             dtd = etree.DTD(dtd_file)
-        with open(XML_PATH, 'rb') as xml_file:
-            xml_doc = etree.parse(xml_file)
-
-        if not dtd.validate(xml_doc):
-            print("Validation Failed! The XML violates the schema:")
-            for error in dtd.error_log:
-                print(f"Line {error.line}: {error.message}")
-            sys.exit(1) # This tells GitHub Actions to STOP and mark the build as failed
-            
-        print("XML is valid.")
-
     except Exception as e:
-        print(f"❌ System error during validation: {e}")
-        sys.exit(1)
+        print(f"❌ Erro ao carregar o ficheiro schema.dtd: {e}")
+        print("Certifica-te que o ficheiro existe na pasta /backend.")
+        return
 
-    # Step 2: Transformation & Versioning
-    try:
-        with open(XML_PATH, 'r', encoding='utf-8') as f:
-            xml_content = f.read()
+    # Lista para guardar todos os manuscritos válidos
+    all_manuscripts = []
 
-        # Calculate MD5 Hash for versioning
-        version_hash = hashlib.md5(xml_content.encode('utf-8')).hexdigest()
+    # ==========================================
+    # 2. Validação e Transformação (Em Lote)
+    # ==========================================
+    # Procurar todos os ficheiros XML na pasta xml_raw
+    xml_files = glob.glob(os.path.join(XML_DIR, '*.xml'))
+    
+    if not xml_files:
+        print(f"⚠️ Nenhum ficheiro XML encontrado na pasta: {XML_DIR}")
+        return
 
-        # Convert to Dictionary
-        data_dict = xmltodict.parse(xml_content, attr_prefix='@_')
+    for xml_path in xml_files:
+        filename = os.path.basename(xml_path)
+        print(f"A processar: {filename}...")
 
-        # Ensure directories exist
-        os.makedirs(os.path.dirname(JSON_OUT), exist_ok=True)
+        try:
+            # Validar o XML
+            with open(xml_path, 'r', encoding='utf-8') as xml_file:
+                xml_doc = etree.parse(xml_file)
 
-        # Save Manuscript JSON
-        with open(JSON_OUT, 'w', encoding='utf-8') as f:
-            json.dump(data_dict, f, ensure_ascii=False, indent=None)
+            if not dtd.validate(xml_doc):
+                print(f"  ❌ Validação Falhou para {filename}! Erros:")
+                for error in dtd.error_log:
+                    print(f"    - Linha {error.line}: {error.message}")
+                continue # Ignora este ficheiro e passa ao próximo
 
-        # Save Version JSON
-        with open(VERSION_OUT, 'w', encoding='utf-8') as f:
-            json.dump({"version": version_hash}, f)
+            # Se for válido, transformar em Dicionário Python
+            with open(xml_path, 'r', encoding='utf-8') as raw_file:
+                xml_content = raw_file.read()
 
-        print(f"Build successful! Version: {version_hash}")
+            data_dict = xmltodict.parse(xml_content, attr_prefix='@_')
+            all_manuscripts.append(data_dict)
+            print(f"  ✅ Transformação com sucesso.")
 
-    except Exception as e:
-        print(f"Transformation failed: {e}")
-        sys.exit(1)
+        except etree.XMLSyntaxError as e:
+            print(f"  ❌ Erro de Sintaxe XML em {filename}: {e}")
+        except Exception as e:
+            print(f"  ❌ Erro inesperado em {filename}: {e}")
 
+    # ==========================================
+    # 3. Exportação para JSON Estático (Frontend)
+    # ==========================================
+    if all_manuscripts:
+        try:
+            with open(JSON_OUTPUT_PATH, 'w', encoding='utf-8') as json_file:
+                json.dump(all_manuscripts, json_file, indent=None, ensure_ascii=False)
+            print(f"\n✅ Pipeline Concluído! {len(all_manuscripts)} registos guardados em: {JSON_OUTPUT_PATH}")
+        except Exception as e:
+            print(f"❌ Erro ao guardar o JSON final: {e}")
+    else:
+        print("\n⚠️ Nenhum registo válido para exportar.")
+
+# Executar o Pipeline
 if __name__ == "__main__":
-    build_pipeline()
+    process_archive_pipeline()
