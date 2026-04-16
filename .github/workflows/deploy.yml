@@ -1,0 +1,51 @@
+name: Deploy Frontend to GitHub Pages
+
+# 1. O GATILHO
+on:
+  push:
+    branches:
+      - main # Corre sempre que enviares alterações (incluindo novos JSONs) para o main
+  workflow_dispatch: # Permite correr manualmente no separador Actions
+
+# 2. PERMISSÕES NECESSÁRIAS
+# Dá autorização ao robô para publicar páginas no teu repositório
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Garante que não ocorrem publicações sobrepostas
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+# 3. AS INSTRUÇÕES DE PUBLICAÇÃO
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      # A. Obter o código do repositório
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # B. Configurar o ambiente do GitHub Pages
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      # C. Preparar os ficheiros que vão para a web
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # ATENÇÃO: Aqui definimos a pasta que contém o teu site. 
+          # Se o teu index.html estiver na pasta "frontend", usa './frontend'. 
+          # Se estiver na raiz do repositório, usa '.'
+          path: './frontend' 
+
+      # D. Publicar o site!
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
