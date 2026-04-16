@@ -1,45 +1,49 @@
-name: Python XML to JSON Pipeline
+name: Jamstack XML to JSON Pipeline
 
-# 1. THE TRIGGER
+# 1. O GATILHO (Quando é que este script corre?)
 on:
   push:
     branches:
       - main
     paths:
-      - 'data/manuscript.xml' 
+      # O script agora corre sempre que adicionares/alterares XMLs nesta nova pasta
+      - 'backend/xml_raw/**/*.xml'
+      # Ou se alterares as regras do DTD ou o próprio script Python
+      - 'backend/schema.dtd'
+      - 'backend/pipeline.py'
 
 permissions:
   contents: write
 
-# 2. THE INSTRUCTIONS
+# 2. AS INSTRUÇÕES
 jobs:
   validate-and-build:
     runs-on: ubuntu-latest 
 
     steps:
-      # A. Get the code
+      # A. Obter o código
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # B. Install Python
+      # B. Instalar o Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      # C. Install libraries from our text file
+      # C. Instalar as bibliotecas (simplificado para instalar diretamente o que precisamos)
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install lxml xmltodict
 
-      # D. Run our engine
+      # D. Correr o nosso motor de dados (caminho atualizado)
       - name: Run Python build script
-        run: python scripts/build.py
+        run: python backend/pipeline.py
 
-      # E. Save the results
+      # E. Guardar os resultados na NOVA pasta do Frontend
       - name: Commit and push generated files
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add public/data/manuscript.json public/data/version.json
-          git diff --quiet && git diff --staged --quiet || git commit -m "🤖 Auto-build: Validated and updated JSON"
+          git add frontend/public/data/manuscritos.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "🤖 Auto-build: Validado e atualizado o JSON (Jamstack)"
           git push
