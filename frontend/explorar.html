@@ -30,8 +30,7 @@
                         textDark: '#383838',
                         textMuted: '#7D736D',
                         brandRed: '#661515',
-                        brandRedDark: '#4a0f0f',
-                        gold: '#D1A537'
+                        brandRedDark: '#4a0f0f'
                     },
                     fontFamily: {
                         playfair: ['"Playfair Display"', 'serif'],
@@ -44,16 +43,19 @@
         }
     </script>
 </head>
-<body class="bg-background font-esteban text-textDark antialiased min-h-screen flex flex-col relative">
+<body class="bg-background font-esteban text-textDark antialiased min-h-screen flex flex-col">
 
     <!-- ==========================================
          HEADER
          ========================================== -->
-    <header class="bg-headerBg border-b-[3px] border-borderLight relative py-10 px-6 flex items-center justify-center z-10">
+    <header class="bg-headerBg border-b-[3px] border-borderLight relative py-10 px-6 flex items-center justify-center">
+        <!-- Back Button -->
         <a href="index.html" class="absolute left-6 md:left-12 flex items-center gap-2 text-textDark hover:text-brandRed transition-colors group">
             <i class="ph ph-arrow-left text-3xl group-hover:-translate-x-1 transition-transform"></i>
             <span class="font-esteban text-xl hidden md:block">Voltar</span>
         </a>
+        
+        <!-- Page Title -->
         <h1 class="font-gloock text-4xl md:text-6xl tracking-[3.2px] text-textDark text-center">
             Explorar Registos
         </h1>
@@ -62,12 +64,59 @@
     <!-- ==========================================
          MAIN CONTENT AREA
          ========================================== -->
-    <main class="flex-grow max-w-[1400px] w-full mx-auto px-6 py-12 flex flex-col gap-8 relative z-0">
+    <main class="flex-grow max-w-[1400px] w-full mx-auto px-6 py-12 flex flex-col gap-8">
+
         <!-- Search Bar Section -->
         <section class="bg-cardBg border-[3px] border-borderLight rounded-xl shadow-[0_4px_13px_rgba(0,0,0,0.05)] p-4 md:p-6 flex items-center gap-4">
             <i class="ph ph-magnifying-glass text-4xl md:text-5xl text-textMuted ml-2"></i>
-            <input type="text" id="search-input" placeholder="Pesquisar por nome, localidade ou ano..." 
-                   class="bg-transparent border-none w-full text-2xl md:text-4xl font-esteban text-textMuted placeholder-textMuted/60 focus:outline-none tracking-wide">
+            <input 
+                type="text" 
+                id="search-input"
+                placeholder="Pesquisar por nome, apelido, data..." 
+                class="bg-transparent border-none w-full text-2xl md:text-4xl font-esteban text-textMuted placeholder-textMuted/60 focus:outline-none tracking-wide"
+            >
+        </section>
+
+        <!-- Filters Section -->
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 bg-cardBg border-[3px] border-borderLight rounded-xl shadow-[0_4px_13px_rgba(0,0,0,0.05)] p-6">
+            
+            <!-- Filters Button -->
+            <button class="md:col-span-2 bg-brandRed border-2 border-brandRed rounded-lg flex items-center justify-center gap-2 py-4 hover:bg-brandRedDark transition-colors">
+                <i class="ph ph-sliders-horizontal text-white text-3xl"></i>
+                <span class="text-white font-esteban text-2xl tracking-[2px]">Filtros</span>
+            </button>
+
+            <!-- Year Filter -->
+            <div class="md:col-span-3 flex flex-col gap-2">
+                <label class="font-playfair text-textMuted text-xl tracking-[1.5px]">ANO</label>
+                <select class="bg-background border-[3px] border-borderLight rounded-lg p-4 font-esteban text-2xl text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
+                    <option>Todos os anos</option>
+                    <option>1926</option>
+                    <option>1927</option>
+                    <option>1928</option>
+                </select>
+            </div>
+
+            <!-- Gender Filter (Placeholder for future schema update) -->
+            <div class="md:col-span-3 flex flex-col gap-2">
+                <label class="font-playfair text-textMuted text-xl tracking-[1.5px]">SEXO</label>
+                <select class="bg-background border-[3px] border-borderLight rounded-lg p-4 font-esteban text-2xl text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
+                    <option>Todos</option>
+                    <option>Masculino</option>
+                    <option>Feminino</option>
+                </select>
+            </div>
+
+            <!-- Location Filter -->
+            <div class="md:col-span-4 flex flex-col gap-2">
+                <label class="font-playfair text-textMuted text-xl tracking-[1.5px]">LOCALIDADE</label>
+                <select class="bg-background border-[3px] border-borderLight rounded-lg p-4 font-esteban text-2xl text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
+                    <option>Todas</option>
+                    <option>Favaios</option>
+                    <option>Sanfins do Douro</option>
+                    <option>Alijó</option>
+                </select>
+            </div>
         </section>
 
         <!-- Data Table Section -->
@@ -75,302 +124,187 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse min-w-[800px]">
                     <thead>
-                        <tr class="border-b-[3px] border-borderLight bg-headerBg">
+                        <tr class="border-b-[3px] border-borderLight">
                             <th class="p-6 font-playfair font-normal text-textMuted text-2xl tracking-[1.5px] w-2/5">NOME</th>
                             <th class="p-6 font-playfair font-normal text-textMuted text-2xl tracking-[1.5px] text-center w-1/5">IDADE</th>
-                            <th class="p-6 font-playfair font-normal text-textMuted text-2xl tracking-[1.5px] text-center w-1/5">DATA ÓBITO</th>
-                            <th class="p-6 font-playfair font-normal text-textMuted text-2xl tracking-[1.5px] text-center w-1/5">AÇÕES</th>
+                            <th class="p-6 font-playfair font-normal text-textMuted text-2xl tracking-[1.5px] text-center w-1/5">DATA MORTE</th>
+                            <th class="p-6 font-playfair font-normal text-textMuted text-2xl tracking-[1.5px] text-center w-1/5">DATA SEPULTURA</th>
                         </tr>
                     </thead>
                     <tbody id="records-table-body" class="font-esteban text-textDark text-2xl">
-                        <!-- Linhas injetadas por JS -->
+                        <!-- JavaScript will inject rows here from Local Storage -->
                     </tbody>
                 </table>
             </div>
             
+            <!-- Empty State -->
             <div id="no-results" class="hidden text-center py-16 text-textMuted">
                 <i class="ph ph-magnifying-glass-minus text-6xl mb-4 opacity-50"></i>
-                <p class="text-2xl" id="no-results-msg">Nenhum registo encontrado.</p>
+                <p class="text-2xl">Nenhum registo encontrado.</p>
             </div>
         </section>
-    </main>
 
-    <!-- ==========================================
-         MANUSCRIPT VIEWER MODAL
-         ========================================== -->
-    <div id="viewer-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex justify-center items-center p-4 md:p-10 opacity-0 transition-opacity duration-300">
-        <div class="bg-background w-full max-w-5xl h-full max-h-[90vh] rounded-xl shadow-2xl flex flex-col border-[4px] border-borderLight overflow-hidden transform scale-95 transition-transform duration-300" id="viewer-content">
+        <!-- Pagination Section -->
+        <section class="flex items-center justify-between md:justify-center md:gap-12 py-8 mt-auto">
+            <button class="bg-background border-[3px] border-borderLight rounded-xl px-8 py-4 font-esteban text-2xl text-textMuted opacity-50 cursor-not-allowed tracking-[1.8px]">
+                Anterior
+            </button>
+            <span class="font-esteban text-2xl text-textMuted tracking-[1.8px]">
+                Página 1 de 1
+            </span>
+            <button class="bg-background border-[3px] border-borderLight rounded-xl px-8 py-4 font-esteban text-2xl text-textDark hover:border-textMuted transition-colors tracking-[1.8px]">
+                Seguinte
+            </button>
+        </section>
+
+       <!-- ==========================================
+             ADICIONAR A PARTIR DAQUI: VISUALIZADOR DOCUMENTAL
+             ========================================== -->
+        <section id="visualizador-documental" class="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-cardBg border-[3px] border-borderLight rounded-xl shadow-[0_4px_13px_rgba(0,0,0,0.05)] p-6 hidden mt-8">
             
-            <div class="bg-headerBg border-b-[3px] border-borderLight p-6 flex justify-between items-center">
-                <h2 class="font-gloock text-3xl text-brandRed flex items-center gap-3">
-                    <i class="ph ph-book-open"></i> Visualizador do Manuscrito
-                </h2>
-                <button onclick="closeViewer()" class="text-textMuted hover:text-brandRed transition-colors bg-white border-2 border-borderLight rounded-full p-2">
-                    <i class="ph ph-x text-2xl"></i>
-                </button>
-            </div>
-
-            <div class="flex-grow overflow-y-auto p-6 md:p-10">
-                <!-- Zona onde a ficha será gerada -->
-                <div id="ficha-identificacao"></div>
-                
-                <!-- Zona onde o texto corrido será gerado -->
-                <div class="mt-8">
-                    <h3 class="font-playfair text-xl text-textMuted tracking-[2px] mb-4 border-b-2 border-borderLight pb-2">TRANSCRIÇÃO DIPLOMÁTICA</h3>
-                    <div id="manuscript-container" class="space-y-6"></div>
+            <!-- Lado Esquerdo: Imagem do Manuscrito -->
+            <div class="flex flex-col gap-4 border-r-0 lg:border-r-[3px] border-borderLight pr-0 lg:pr-6">
+                <h3 class="font-playfair text-2xl text-textDark tracking-[1px] border-b-2 border-borderLight pb-2">Manuscrito Original</h3>
+                <div class="bg-background w-full h-[600px] border-2 border-borderLight rounded-lg overflow-hidden relative">
+                    <!-- O caminho aponta para a imagem Favaios.png que está na sua pasta public -->
+                    <img src="public/Favaios.png" alt="Registo Paroquial de Favaios" class="w-full h-full object-cover cursor-zoom-in hover:scale-105 transition-transform duration-300">
                 </div>
             </div>
-        </div>
-    </div>
+
+            <!-- Lado Direito: A Transcrição Dinâmica -->
+            <div class="flex flex-col gap-4 pl-0 lg:pl-2">
+                <h3 class="font-playfair text-2xl text-brandRed tracking-[1px] border-b-2 border-borderLight pb-2">Transcrição Diplomática</h3>
+                
+                <!-- ESTE É O "PALCO": A div onde o XSLTProcessor vai injetar o HTML resultante -->
+                <div id="area-transcricao" class="overflow-y-auto h-[600px] pr-4 font-esteban text-xl leading-relaxed text-textDark">
+                    <!-- Conteúdo vazio, aguardando o JavaScript -->
+                </div>
+            </div>
+        </section>
+
+    </main>
 
     <!-- ==========================================
          JAVASCRIPT LOGIC
          ========================================== -->
     <script>
-        let allEntries = [];
+        const STORAGE_KEY = 'favaios_archive_records';
+        let allRecords = [];
 
-        // --- FUNÇÕES AUXILIARES ---
-        function ensureArray(element) {
-            if (!element) return [];
-            return Array.isArray(element) ? element : [element];
-        }
-
-        function getTextContent(obj) {
-            if (typeof obj === 'string') return obj;
-            if (typeof obj === 'object' && obj !== null) {
-                const text = obj['__text'] || obj['#text'] || '';
-                return text.replace(/\n\s*/g, ' ').trim();
-            }
-            return '';
-        }
-
-        function findTagInData(data, tagName) {
-            if (typeof data !== 'object' || data === null) return null;
-            if (data[tagName]) return data[tagName];
+        // 1. Initialize Page
+        function initPage() {
+            // Retrieve data saved from index.html
+            allRecords = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
             
-            for (let key in data) {
-                const result = findTagInData(data[key], tagName);
-                if (result) return result;
-            }
-            return null;
-        }
-
-        // Utilizado agora apenas para as assinaturas, pois o <p> já vem pronto no _full_text
-        function extractRawText(data) {
-            if (typeof data === 'string') return data.replace(/\n\s*/g, ' ').trim();
-            if (Array.isArray(data)) return data.map(extractRawText).join(' ');
-            if (typeof data !== 'object' || data === null) return '';
+            // Sort by date initially
+            allRecords.sort((a, b) => new Date(a.data) - new Date(b.data));
             
-            let textParts = [];
-            for (let key in data) {
-                if (key === '__text' || key === '#text') {
-                    textParts.push(data[key].replace(/\n\s*/g, ' ').trim());
-                } else if (!key.startsWith('_') && !key.startsWith('@_')) {
-                    textParts.push(extractRawText(data[key]));
-                }
-            }
-            return textParts.filter(Boolean).join(' ');
+            renderTable(allRecords);
+            setupSearch();
         }
 
-        // --- PROCESSAMENTO DO JSON ---
-        function extractEntryInfo(entry) {
-            // Suporta formatos antigos e novos do parser
-            const idAssento = entry['_n'] || entry['@_n'] || 'N/A';
-
-            let nomeCompleto = "Desconhecido";
-            const persNames = ensureArray(entry.persName);
-            
-            if (persNames.length > 0) {
-                const deceased = persNames.find(p => p['_type'] === 'deceased' || p['@_type'] === 'deceased') || persNames[0];
-                const forenames = ensureArray(deceased.forename).map(getTextContent).join(' ');
-                const surnames = ensureArray(deceased.surname).map(getTextContent).join(' ');
-                // Substituir erros de formatação onde "daConceição" ficou colado
-                nomeCompleto = `${forenames} ${surnames}`.trim().replace(/daConceição/g, "da Conceição");
-            }
-
-            const p = entry.p || {};
-            const deathTag = findTagInData(p, 'death');
-            const ageTag = findTagInData(p, 'age');
-            const placeTags = ensureArray(findTagInData(p, 'placeName'));
-
-            const dataObito = deathTag ? (deathTag['_when'] || deathTag['@_when'] || 'N/A') : 'N/A';
-            const idadeVal = ageTag ? (ageTag['_value'] || ageTag['@_value'] || '') : '';
-            const idadeUnit = ageTag ? (ageTag['_unit'] || ageTag['@_unit'] || 'anos') : '';
-            const idade = idadeVal ? `${idadeVal} ${idadeUnit}` : 'N/A';
-            
-            const localidade = placeTags.map(getTextContent).filter(t => t).join(', ') || 'N/A';
-
-            // NOVO: Captura o texto corrido guardado na variável do novo conversor Python
-            const transcricaoCompleta = entry['_full_text'] || "Texto de transcrição não disponível.";
-
-            return { 
-                idAssento, 
-                nomeCompleto, 
-                dataObito, 
-                idade, 
-                localidade, 
-                transcricaoCompleta, 
-                signed: entry.signed 
-            };
-        }
-
-        // --- INICIALIZAÇÃO ---
-        async function loadData() {
-            const pathsToTry = [
-                './manuscript.json',
-                './public/data/manuscript.json',         
-                './data/manuscript.json'
-            ];
-
-            for (const path of pathsToTry) {
-                try {
-                    const resData = await fetch(path);
-                    if (resData.ok) {
-                        console.log(`✅ JSON encontrado em: ${path}`);
-                        return await resData.json();
-                    }
-                } catch (error) {}
-            }
-            return null;
-        }
-
-        async function initPage() {
-            const data = await loadData();
-            const msgBox = document.getElementById('no-results');
-            const msgText = document.getElementById('no-results-msg');
-            
-            if (data && data.div && data.div.list && data.div.list.entry) {
-                allEntries = ensureArray(data.div.list.entry);
-                renderTable(allEntries);
-                setupSearch();
-            } else {
-                msgBox.classList.remove('hidden');
-                msgText.innerHTML = "Não foi possível carregar os dados do <strong>manuscript.json</strong>.";
-            }
-        }
-
-        // --- INTERFACE E LÓGICA DE TABELA ---
-        function renderTable(entriesToRender) {
+        // 2. Render Table Rows
+        function renderTable(recordsToRender) {
             const tbody = document.getElementById('records-table-body');
             const noResults = document.getElementById('no-results');
             
             tbody.innerHTML = '';
 
-            if (entriesToRender.length === 0) {
+            if (recordsToRender.length === 0) {
                 noResults.classList.remove('hidden');
             } else {
                 noResults.classList.add('hidden');
 
-                entriesToRender.forEach((entry) => {
-                    const info = extractEntryInfo(entry);
+                recordsToRender.forEach((record, index) => {
                     const tr = document.createElement('tr');
-                    tr.className = "bg-white hover:bg-[#F2EEE9] transition-colors border-b-[3px] border-borderLight";
                     
-                    // Em vez de enviar o JSON todo no botão, enviamos apenas o ID seguro (ex: '2')
+                    // Adicionamos classes para indicar que a linha é clicável (interatividade)
+                    let baseClasses = "hover:bg-headerBg cursor-pointer transition-colors duration-200 ";
+                    
+                    if (index !== recordsToRender.length - 1) {
+                        tr.className = baseClasses + "border-b-[3px] border-borderLight bg-cardBg";
+                    } else {
+                        tr.className = baseClasses + "bg-cardBg";
+                    }
+                    
+                    // Format Date
+                    const dateObj = new Date(record.data);
+                    const formattedDate = dateObj.toLocaleDateString('pt-PT');
+                    const sepulturaDate = "N/A";
+
                     tr.innerHTML = `
-                        <td class="p-6 font-bold text-brandRed tracking-[1.5px]">${info.nomeCompleto}</td>
-                        <td class="p-6 text-center tracking-[1.5px]">${info.idade}</td>
-                        <td class="p-6 text-center tracking-[1.5px]">${info.dataObito}</td>
-                        <td class="p-6 text-center tracking-[1.5px]">
-                            <button onclick="openViewer('${info.idAssento}')" class="bg-brandRed text-white px-5 py-2 font-playfair hover:bg-brandRedDark transition-colors rounded shadow-sm inline-flex items-center gap-2">
-                                <i class="ph ph-eye"></i> Ler
-                            </button>
-                        </td>
+                        <td class="p-6 tracking-[1.5px]">${record.nome}</td>
+                        <td class="p-6 text-center tracking-[1.5px]">${record.idade} anos</td>
+                        <td class="p-6 text-center tracking-[1.5px]">${formattedDate}</td>
+                        <td class="p-6 text-center tracking-[1.5px] text-textMuted">${sepulturaDate}</td>
                     `;
+                    
+                    // O EVENTO CHAVE: Ao clicar na linha, carrega a transcrição XSLT
+                    tr.addEventListener('click', () => {
+                        carregarRegistoDiplomatico(record);
+                    });
+
                     tbody.appendChild(tr);
                 });
             }
         }
 
+        // 3. Simple Search Logic (Live Filtering)
         function setupSearch() {
             const searchInput = document.getElementById('search-input');
+            
             searchInput.addEventListener('input', (e) => {
                 const term = e.target.value.toLowerCase();
-                const filtered = allEntries.filter(entry => {
-                    const info = extractEntryInfo(entry);
-                    return info.nomeCompleto.toLowerCase().includes(term) || 
-                           info.dataObito.includes(term) ||
-                           info.localidade.toLowerCase().includes(term);
+                const filtered = allRecords.filter(record => {
+                    return record.nome.toLowerCase().includes(term) || 
+                           record.data.includes(term);
                 });
                 renderTable(filtered);
             });
         }
 
-        // --- INTERFACE (MODAL DO VISUALIZADOR) ---
-        function openViewer(idAssento) {
-            // Vai à memória buscar o registo correto, sem arriscar crash do HTML
-            const entry = allEntries.find(e => {
-                const n = e['_n'] || e['@_n'];
-                return n === idAssento;
-            });
-            
-            if (!entry) return; // Segurança caso o ID não exista
+        // 4. Motor de Transformação XSLT (Método 2)
+        async function carregarRegistoDiplomatico(recordData) {
+            try {
+                // Revela a secção do visualizador documental criada anteriormente
+                const visualizador = document.getElementById('visualizador-documental');
+                if (visualizador) visualizador.classList.remove('hidden');
 
-            const info = extractEntryInfo(entry);
-            const modal = document.getElementById('viewer-modal');
-            const content = document.getElementById('viewer-content');
-            
-            // Ficha de Identificação
-            document.getElementById('ficha-identificacao').innerHTML = `
-                <div class="bg-[#F2EEE9] border-[3px] border-[#DCD6CD] rounded-lg p-6 shadow-sm">
-                    <h3 class="font-gloock text-3xl mb-4 border-b-2 border-[#DCD6CD] pb-2 text-brandRed flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <span>Ficha de Identificação</span>
-                        <span class="text-sm font-esteban bg-white px-4 py-2 rounded border-2 border-[#DCD6CD] text-textMuted">Assento Nº ${info.idAssento}</span>
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-esteban text-xl text-textDark">
-                        <p><strong>Nome:</strong> <span class="text-brandRed font-bold">${info.nomeCompleto}</span></p>
-                        <p><strong>Data do Óbito:</strong> ${info.dataObito}</p>
-                        <p><strong>Idade Registada:</strong> ${info.idade}</p>
-                        <p><strong>Localidades Mencionadas:</strong> ${info.localidade}</p>
-                    </div>
-                </div>
-            `;
+                const areaTranscricao = document.getElementById("area-transcricao");
+                areaTranscricao.innerHTML = '<div class="flex h-full items-center justify-center opacity-50"><i class="ph ph-spinner-gap animate-spin text-4xl mr-2"></i> A carregar transcrição estruturada...</div>';
 
-            // Transcrição Diplomática (Lê o campo _full_text diretamente!)
-            let htmlTexto = `
-                <div class="p-6 bg-[#F8F6F2] border border-[#DCD6CD] rounded-lg shadow-sm">
-                    <p class="font-esteban text-2xl leading-relaxed text-[#383838]">
-                        ${info.transcricaoCompleta}
-                    </p>
-                </div>
-            `;
+                // Busca o ficheiro XML da pasta public do repositório
+                const respostaXML = await fetch('public/template-assento.xml');
+                if (!respostaXML.ok) throw new Error("XML não encontrado.");
+                const textoXML = await respostaXML.text();
+                const xml = new DOMParser().parseFromString(textoXML, "text/xml");
 
-            // Mantém a Assinatura usando a função recursiva antiga
-            const assinaturas = ensureArray(info.signed);
-            assinaturas.forEach(sig => {
-                const textoAssinatura = extractRawText(sig);
-                if(textoAssinatura) {
-                    htmlTexto += `
-                        <div class="text-right mt-6 text-2xl font-playfair italic text-textMuted">
-                            ${textoAssinatura}
-                        </div>
-                    `;
-                }
-            });
+                // Busca a folha XSLT da pasta public (que deverá ser adicionada ao repositório)
+                const respostaXSLT = await fetch('public/transformacao-assento.xsl');
+                if (!respostaXSLT.ok) throw new Error("XSLT não encontrado.");
+                const textoXSLT = await respostaXSLT.text();
+                const xslt = new DOMParser().parseFromString(textoXSLT, "text/xml");
 
-            document.getElementById('manuscript-container').innerHTML = htmlTexto;
+                // Executa a transformação XSLT nativa no browser
+                const processador = new XSLTProcessor();
+                processador.importStylesheet(xslt);
+                const fragmentoHTML = processador.transformToFragment(xml, document);
 
-            // Mostra o modal com animação suave
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                content.classList.remove('scale-95');
-            }, 10);
+                // Injeta o HTML processado no palco
+                areaTranscricao.innerHTML = ''; 
+                areaTranscricao.appendChild(fragmentoHTML);
+
+                // Opcional: Rola a página suavemente até à transcrição para guiar o olhar do utilizador
+                visualizador.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            } catch (erro) {
+                console.error("Erro no processamento XSLT:", erro);
+                document.getElementById("area-transcricao").innerHTML = 
+                    `<p class="text-brandRed p-4">Erro ao processar a anotação diplomática. Verifique se os ficheiros existem na pasta public.</p>`;
+            }
         }
 
-        function closeViewer() {
-            const modal = document.getElementById('viewer-modal');
-            const content = document.getElementById('viewer-content');
-            
-            modal.classList.add('opacity-0');
-            content.classList.add('scale-95');
-            
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        }
-
-        // Arranca o código ao carregar a página
+        // Run when page loads
         window.onload = initPage;
     </script>
 </body>
