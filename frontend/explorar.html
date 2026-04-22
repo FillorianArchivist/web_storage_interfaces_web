@@ -187,12 +187,15 @@
             <div class="flex flex-col gap-4 border-r-0 lg:border-r-[3px] border-borderLight pr-0 lg:pr-6">
                 <h3 class="font-playfair text-2xl text-textDark tracking-[1px] border-b-2 border-borderLight pb-2">Manuscrito Original</h3>
     
-               <!-- Contentor com Zoom via CSS (Tailwind) -->
-                <div class="bg-background w-full h-[600px] border-2 border-borderLight rounded-lg overflow-hidden relative group">
-                    <!-- A classe group-hover:scale-[2.0] duplica o tamanho da imagem suavemente -->
-                    <img src="public/3v.jpg" 
-                       alt="Registo Paroquial de Favaios" 
-                       class="w-full h-full object-cover cursor-zoom-in transition-transform duration-700 ease-in-out group-hover:scale-[2.0] origin-center">
+            <!-- Contentor do Zoom Interativo (Vanilla JS) -->
+            <!-- A classe cursor-grab indica ao utilizador que a imagem pode ser arrastada -->
+                <div id="zoom-container" class="bg-background w-full h-[600px] border-2 border-borderLight rounded-lg overflow-hidden relative cursor-grab active:cursor-grabbing">
+        
+                    <!-- O ficheiro Favaios.png está ao mesmo nível do explorar.html -->
+                        <img id="manuscrito-imagem" 
+                            src="public/3v.jpg" 
+                            alt="Registo Paroquial de Favaios" 
+                            class="w-full h-full object-contain origin-top-left">
                 </div>
             </div>
 
@@ -363,7 +366,88 @@
                 renderTable(filtered);
             });
         }
+        
+        // Variáveis de controlo espacial
+        let escalaZoom = 1;
+        let emArrasto = false;
+        let pontoX = 0;
+        let pontoY = 0;
+        let inicioArrasto = { x: 0, y: 0 };
 
+// Função para iniciar o visualizador manual
+        function ativarZoomManual() {
+            const contentor = document.getElementById('zoom-container');
+            const imagem = document.getElementById('manuscrito-imagem');
+
+            if (!contentor || !imagem) return;
+
+    // 1. Evento da Roda do Rato (Zoom In/Out)
+            contentor.onwheel = function(evento) {
+                evento.preventDefault();
+        
+        // Calcula a posição do rato para fazer zoom na direção do cursor
+                const xs = (evento.clientX - pontoX) / escalaZoom;
+                const ys = (evento.clientY - pontoY) / escalaZoom;
+        
+        // Deteta se a roda foi para cima ou para baixo
+                const delta = (evento.wheelDelta ? evento.wheelDelta : -evento.deltaY);
+
+        // Aumenta ou diminui a escala em 20%
+                (delta > 0) ? (escalaZoom *= 1.2) : (escalaZoom /= 1.2);
+
+        // Limites de zoom: não deixa ficar mais pequeno que o original, nem infinitamente grande
+                if(escalaZoom < 1) {
+                    escalaZoom = 1;
+                    pontoX = 0;
+                    pontoY = 0;
+                } else if (escalaZoom > 15) {
+                    escalaZoom = 15;
+                } else {
+                    pontoX = evento.clientX - xs * escalaZoom;
+                    pontoY = evento.clientY - ys * escalaZoom;
+                }
+
+                aplicarTransformacao(imagem);
+            };
+
+    // 2. Evento de Clicar e Segurar (Início do Pan/Arrastar)
+            contentor.onmousedown = function(evento) {
+                evento.preventDefault();
+                inicioArrasto = { x: evento.clientX - pontoX, y: evento.clientY - pontoY };
+                emArrasto = true;
+            };
+
+    // 3. Evento de Largar o Clique (Fim do Pan)
+            contentor.onmouseup = function() {
+                emArrasto = false;
+            };
+    
+    // Cancela o arrasto se o rato sair da área do documento
+            contentor.onmouseleave = function() {
+                emArrasto = false;
+            };
+
+    // 4. Evento de Mover o Rato (Arrastar o documento)
+            contentor.onmousemove = function(evento) {
+                evento.preventDefault();
+                if (!emArrasto || escalaZoom === 1) return; // Só arrasta se tiver zoom aplicado
+        
+                pontoX = (evento.clientX - inicioArrasto.x);
+                pontoY = (evento.clientY - inicioArrasto.y);
+        
+                aplicarTransformacao(imagem);
+            };
+        }
+
+// Função auxiliar que injeta o CSS matematicamente calculado na imagem
+        function aplicarTransformacao(imagem) {
+            imagem.style.transform = `translate(${pontoX}px, ${pontoY}px) scale(${escalaZoom})`;
+        }
+
+// O motor deve ser ativado assim que a página carregar
+        document.addEventListener('DOMContentLoaded', ativarZoomManual);
+
+        
         // 4. Motor de Transformação XSLT (Método 2)
         async function carregarRegistoDiplomatico(recordData) {
             try {
