@@ -18,7 +18,7 @@
     
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    
+
     <!-- Custom Tailwind Configuration -->
     <script>
         tailwind.config = {
@@ -45,6 +45,26 @@
             }
         }
     </script>
+
+    <style>
+
+        /* --- NAVEGAÇÃO --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.0rem 5%;
+            background: var(--nav-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-logo-area { display: flex; align-items: center; gap: 10px; }
+        .nav-logo-area img { width: 30px; height: auto; }
+        .nav-title { font-family: 'Gloock', serif; font-size: 1rem; }
+
+        .nav-links { display: flex; list-style: none; gap: 25px; margin: 0; }
+        .nav-links a { text-decoration: none; color: #7D736D; font-family: 'Gloock', serif; font-size: 1.0rem; }
+    </style>
 </head>
 <body class="bg-background font-esteban text-textDark antialiased min-h-screen flex flex-col">
 
