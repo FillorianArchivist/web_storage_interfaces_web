@@ -187,15 +187,23 @@
             <div class="flex flex-col gap-4 border-r-0 lg:border-r-[3px] border-borderLight pr-0 lg:pr-6">
                 <h3 class="font-playfair text-2xl text-textDark tracking-[1px] border-b-2 border-borderLight pb-2">Manuscrito Original</h3>
     
-            <!-- Contentor do Zoom Interativo (Vanilla JS) -->
-            <!-- A classe cursor-grab indica ao utilizador que a imagem pode ser arrastada -->
-                <div id="zoom-container" class="bg-background w-full h-[600px] border-2 border-borderLight rounded-lg overflow-hidden relative cursor-grab active:cursor-grabbing">
+            <!-- Contentor do Zoom Interativo -->
+            <!-- Alterado para bg-black e adicionada a classe 'group' -->
+                <div id="zoom-container" class="bg-black w-full h-[600px] border-2 border-borderLight rounded-lg overflow-hidden relative cursor-grab active:cursor-grabbing group">
         
                     <!-- O ficheiro Favaios.png está ao mesmo nível do explorar.html -->
                         <img id="manuscrito-imagem" 
                             src="public/3v.jpg" 
                             alt="Registo Paroquial de Favaios" 
                             class="w-full h-full object-contain origin-top-left">
+
+                    <!-- Painel de Botões de Controlo -->
+                    <!-- Surge suavemente no canto inferior direito ao colocar o rato no visualizador -->
+                        <div class="absolute bottom-4 right-4 flex gap-2 bg-black/50 p-2 rounded-lg backdrop-blur-md border border-borderLight/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <button id="btn-zoom-out" class="bg-cardBg hover:bg-borderLight text-textDark text-xl font-bold rounded w-10 h-10 flex items-center justify-center shadow transition-colors" title="Afastar">-</button>
+                            <button id="btn-zoom-reset" class="bg-cardBg hover:bg-borderLight text-textDark text-xl font-bold rounded w-10 h-10 flex items-center justify-center shadow transition-colors" title="Restaurar Visão">↺</button>
+                            <button id="btn-zoom-in" class="bg-cardBg hover:bg-borderLight text-textDark text-xl font-bold rounded w-10 h-10 flex items-center justify-center shadow transition-colors" title="Aproximar">+</button>
+                        </div>
                 </div>
             </div>
 
@@ -437,6 +445,44 @@
         
                 aplicarTransformacao(imagem);
             };
+
+            // 5. Lógica dos Botões de Controlo
+            const btnZoomIn = document.getElementById('btn-zoom-in');
+            const btnZoomOut = document.getElementById('btn-zoom-out');
+            const btnZoomReset = document.getElementById('btn-zoom-reset');
+
+            if (btnZoomIn) {
+                btnZoomIn.addEventListener('click', (evento) => {
+                    evento.stopPropagation(); // Evita que o clique arraste a imagem acidentalmente
+                    escalaZoom *= 1.2;
+                    if (escalaZoom > 15) escalaZoom = 15;
+                    aplicarTransformacao(imagem);
+                });
+            }
+
+            if (btnZoomOut) {
+                btnZoomOut.addEventListener('click', (evento) => {
+                    evento.stopPropagation();
+                    escalaZoom /= 1.2;
+                    if (escalaZoom < 1) {
+                        escalaZoom = 1;
+                        pontoX = 0;
+                        pontoY = 0;
+                    }
+                    aplicarTransformacao(imagem);
+                });
+            }
+
+            if (btnZoomReset) {
+                btnZoomReset.addEventListener('click', (evento) => {
+                    evento.stopPropagation();
+                    // Restaura os valores matemáticos para o ponto inicial
+                    escalaZoom = 1;
+                    pontoX = 0;
+                    pontoY = 0;
+                    aplicarTransformacao(imagem);
+                });
+            }
         }
 
 // Função auxiliar que injeta o CSS matematicamente calculado na imagem
