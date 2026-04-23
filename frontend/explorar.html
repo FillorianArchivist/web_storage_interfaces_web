@@ -230,9 +230,14 @@
                 <h3 class="font-playfair text-xl text-brandRed tracking-[1px] border-b-2 border-borderLight pb-2">Transcrição Diplomática</h3>
                 
                 <!-- ESTE É O "PALCO": A div onde o XSLTProcessor vai injetar o HTML resultante -->
-                <div id="area-transcricao" class="overflow-y-auto h-[500px] pr-4 font-esteban text-base leading-relaxed text-textDark">
-                    <!-- Conteúdo vazio, aguardando o JavaScript -->
-                </div>
+                <select id="menu-destaques" class="bg-cardBg border border-borderLight text-textDark text-sm rounded-lg focus:ring-brandRed focus:border-brandRed block p-2 font-esteban outline-none cursor-pointer">
+                    <option value="none">Destacar Entidades...</option>
+                    <option value="death">Dados de Óbito</option>
+                    <option value="persName">Nomes de Pessoas</option>
+                    <option value="placeName">Toponímia / Lugares</option>
+                    <option value="sacraments">Sacramentos</option>
+                    <option value="occupation">Profissões</option>
+                </select>
             </div>
         </section>
 
