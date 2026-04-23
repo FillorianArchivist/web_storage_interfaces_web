@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-PT" class="scroll-smooth" style="font-size: 80%;">
+<html lang="pt-PT" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -106,13 +106,13 @@
     <main class="flex-grow max-w-[1400px] w-full mx-auto px-6 py-12 flex flex-col gap-8">
 
         <!-- Search Bar Section -->
-        <section class="bg-cardBg border-[3px] border-borderLight rounded-xl shadow-[0_4px_13px_rgba(0,0,0,0.05)] p-4 md:p-6 flex items-center gap-4">
-            <i class="ph ph-magnifying-glass text-4xl md:text-5xl text-textMuted ml-2"></i>
+        <section class="bg-cardBg border-[3px] border-borderLight rounded-xl shadow-[0_4px_13px_rgba(0,0,0,0.05)] p-3 flex items-center gap-4">
+            <i class="ph ph-magnifying-glass text-2xl text-textMuted ml-2"></i>
             <input 
                 type="text" 
                 id="search-input"
                 placeholder="Pesquisar por nome, apelido, data..." 
-                class="bg-transparent border-none w-full text-2xl md:text-4xl font-esteban text-textMuted placeholder-textMuted/60 focus:outline-none tracking-wide"
+                class="bg-transparent border-none w-full text-xl font-esteban text-textMuted placeholder-textMuted/60 focus:outline-none tracking-wide"
             >
         </section>
 
@@ -121,14 +121,14 @@
             
             <!-- Filters Button -->
             <button class="md:col-span-2 bg-brandRed border-2 border-brandRed rounded-lg flex items-center justify-center gap-2 py-4 hover:bg-brandRedDark transition-colors">
-                <i class="ph ph-sliders-horizontal text-white text-3xl"></i>
-                <span class="text-white font-esteban text-2xl tracking-[2px]">Filtros</span>
+                <i class="ph ph-sliders-horizontal text-white text-xl"></i>
+                <span class="text-white font-esteban text-lg tracking-[2px]">Filtros</span>
             </button>
 
             <!-- Year Filter -->
             <div class="md:col-span-3 flex flex-col gap-2">
-                <label class="font-playfair text-textMuted text-xl tracking-[1.5px]">ANO</label>
-                <select class="bg-background border-[3px] border-borderLight rounded-lg p-4 font-esteban text-2xl text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
+                <label class="font-playfair text-textMuted text-sm tracking-[1.5px]">ANO</label>
+                <select class="bg-background border-[3px] border-borderLight rounded-lg p-2 font-esteban text-base text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
                     <option>Todos os anos</option>
                     <option>1926</option>
                     <option>1927</option>
@@ -138,8 +138,8 @@
 
             <!-- Gender Filter (Placeholder for future schema update) -->
             <div class="md:col-span-3 flex flex-col gap-2">
-                <label class="font-playfair text-textMuted text-xl tracking-[1.5px]">SEXO</label>
-                <select class="bg-background border-[3px] border-borderLight rounded-lg p-4 font-esteban text-2xl text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
+                <label class="font-playfair text-textMuted text-sm tracking-[1.5px]">SEXO</label>
+                <select class="bg-background border-[3px] border-borderLight rounded-lg p-2 font-esteban text-base text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
                     <option>Todos</option>
                     <option>Masculino</option>
                     <option>Feminino</option>
@@ -148,8 +148,8 @@
 
             <!-- Location Filter -->
             <div class="md:col-span-4 flex flex-col gap-2">
-                <label class="font-playfair text-textMuted text-xl tracking-[1.5px]">LOCALIDADE</label>
-                <select class="bg-background border-[3px] border-borderLight rounded-lg p-4 font-esteban text-2xl text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
+                <label class="font-playfair text-textMuted text-sm tracking-[1.5px]">LOCALIDADE</label>
+                <select class="bg-background border-[3px] border-borderLight rounded-lg p-2 font-esteban text-base text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
                     <option>Todas</option>
                     <option>Favaios</option>
                     <option>Sanfins do Douro</option>
@@ -164,13 +164,13 @@
                 <table class="w-full text-left border-collapse min-w-[800px]">
                     <thead>
                         <tr class="border-b-[3px] border-borderLight">
-                            <th class="p-6 font-playfair font-normal text-textMuted text-2xl tracking-[1.5px] w-2/5">NOME</th>
-                            <th class="p-6 font-playfair font-normal text-textMuted text-2xl tracking-[1.5px] text-center w-1/5">IDADE</th>
-                            <th class="p-6 font-playfair font-normal text-textMuted text-2xl tracking-[1.5px] text-center w-1/5">DATA MORTE</th>
-                            <th class="p-6 font-playfair font-normal text-textMuted text-2xl tracking-[1.5px] text-center w-1/5">DATA SEPULTURA</th>
+                            <th class="p-4 font-playfair font-normal text-textMuted text-lg tracking-[1.5px] w-2/5">NOME</th>
+                            <th class="p-4 font-playfair font-normal text-textMuted text-lg tracking-[1.5px] text-center w-1/5">IDADE</th>
+                            <th class="p-4 font-playfair font-normal text-textMuted text-lg tracking-[1.5px] text-center w-1/5">DATA MORTE</th>
+                            <th class="p-4 font-playfair font-normal text-textMuted text-lg tracking-[1.5px] text-center w-1/5">DATA SEPULTURA</th>
                         </tr>
                     </thead>
-                    <tbody id="records-table-body" class="font-esteban text-textDark text-2xl">
+                    <tbody id="records-table-body" class="font-esteban text-textDark text-base">
                         <!-- JavaScript will inject rows here from Local Storage -->
                     </tbody>
                 </table>
@@ -369,10 +369,10 @@
                     }
 
                     tr.innerHTML = `
-                        <td class="p-6 tracking-[1.5px]">${record.nome}</td>
-                        <td class="p-6 text-center tracking-[1.5px]">${record.idade} anos</td>
-                        <td class="p-6 text-center tracking-[1.5px]">${formattedDate}</td>
-                        <td class="p-6 text-center tracking-[1.5px] text-textMuted">${sepulturaDate}</td>
+                        <td class="p-4 tracking-[1.5px]">${record.nome}</td>
+                        <td class="p-4 text-center tracking-[1.5px]">${record.idade} anos</td>
+                        <td class="p-4 text-center tracking-[1.5px]">${formattedDate}</td>
+                        <td class="p-4 text-center tracking-[1.5px] text-textMuted">${sepulturaDate}</td>
                     `;
                     
                     // 3ª ALTERAÇÃO (A MAIS IMPORTANTE): O evento que aciona o XSLT ao clicar na linha
