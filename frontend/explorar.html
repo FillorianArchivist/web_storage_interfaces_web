@@ -54,7 +54,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 5%;
+    padding: 0.8rem 5%;
     background: var(--nav-bg);
     border-bottom: 1px solid var(--border-color);
     min-height: 40px;
@@ -69,7 +69,7 @@
     text-decoration: none; 
     color: #7D736D; 
     font-family: 'Gloock', serif; 
-    font-size: 1.05rem !important;
+    font-size: 0.95rem !important;
     font-weight: 500;
     line-height: 1;
     transition: color 0.3s ease;
@@ -111,21 +111,21 @@
     <main class="flex-grow max-w-[1400px] w-full mx-auto px-6 py-12 flex flex-col gap-8">
 
         <!-- Search Bar Section -->
-        <section class="bg-cardBg border-[3px] border-borderLight rounded-xl shadow-[0_4px_13px_rgba(0,0,0,0.05)] p-3 flex items-center gap-4">
+        <section class="bg-cardBg border-2 border-borderLight rounded-xl shadow-[0_4px_13px_rgba(0,0,0,0.05)] p-4 flex items-center gap-4">
             <i class="ph ph-magnifying-glass text-2xl text-textMuted ml-2"></i>
             <input 
                 type="text" 
                 id="search-input"
                 placeholder="Pesquisar por nome, apelido, data..." 
-                class="bg-transparent border-none w-full text-xl font-esteban text-textMuted placeholder-textMuted/60 focus:outline-none tracking-wide"
+                class="bg-transparent border-none w-full text-lg font-esteban text-textMuted placeholder-textMuted/60 focus:outline-none tracking-wide"
             >
         </section>
 
         <!-- Filters Section -->
-        <section class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 bg-cardBg border-[3px] border-borderLight rounded-xl shadow-[0_4px_13px_rgba(0,0,0,0.05)] p-6">
+        <section class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 bg-cardBg border-2 border-borderLight rounded-xl shadow-[0_4px_13px_rgba(0,0,0,0.05)] p-6">
             
             <!-- Filters Button -->
-            <button class="md:col-span-2 bg-brandRed border-2 border-brandRed rounded-lg flex items-center justify-center gap-2 py-4 hover:bg-brandRedDark transition-colors">
+            <button class="md:col-span-2 bg-brandRed border-2 border-brandRed rounded-lg flex items-center justify-center gap-2 py-2 hover:bg-brandRedDark transition-colors">
                 <i class="ph ph-sliders-horizontal text-white text-xl"></i>
                 <span class="text-white font-esteban text-lg tracking-[2px]">Filtros</span>
             </button>
@@ -133,7 +133,7 @@
             <!-- Year Filter -->
             <div class="md:col-span-3 flex flex-col gap-2">
                 <label class="font-playfair text-textMuted text-sm tracking-[1.5px]">ANO</label>
-                <select class="bg-background border-[3px] border-borderLight rounded-lg p-2 font-esteban text-base text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
+                <select class="bg-background border-2 border-borderLight rounded-lg p-2 font-esteban text-base text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
                     <option>Todos os anos</option>
                     <option>1926</option>
                     <option>1927</option>
@@ -144,7 +144,7 @@
             <!-- Gender Filter (Placeholder for future schema update) -->
             <div class="md:col-span-3 flex flex-col gap-2">
                 <label class="font-playfair text-textMuted text-sm tracking-[1.5px]">SEXO</label>
-                <select class="bg-background border-[3px] border-borderLight rounded-lg p-2 font-esteban text-base text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
+                <select class="bg-background border-2 border-borderLight rounded-lg p-2 font-esteban text-base text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
                     <option>Todos</option>
                     <option>Masculino</option>
                     <option>Feminino</option>
@@ -154,7 +154,7 @@
             <!-- Location Filter -->
             <div class="md:col-span-4 flex flex-col gap-2">
                 <label class="font-playfair text-textMuted text-sm tracking-[1.5px]">LOCALIDADE</label>
-                <select class="bg-background border-[3px] border-borderLight rounded-lg p-2 font-esteban text-base text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
+                <select class="bg-background border-2 border-borderLight rounded-lg p-2 font-esteban text-base text-textMuted focus:outline-none focus:border-brandRed cursor-pointer appearance-none">
                     <option>Todas</option>
                     <option>Favaios</option>
                     <option>Sanfins do Douro</option>
@@ -164,7 +164,7 @@
         </section>
 
         <!-- Data Table Section -->
-        <section class="bg-tableBg border-[3px] border-borderLight rounded-xl shadow-[0_4px_13px_rgba(0,0,0,0.05)] overflow-hidden mt-4">
+        <section class="bg-tableBg border-2 border-borderLight rounded-xl shadow-[0_4px_13px_rgba(0,0,0,0.05)] overflow-hidden mt-4">
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse min-w-[800px]">
                     <thead>
@@ -204,7 +204,7 @@
        <!-- ==========================================
              ADICIONAR A PARTIR DAQUI: VISUALIZADOR DOCUMENTAL
              ========================================== -->
-        <section id="visualizador-documental" class="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-cardBg border-[3px] border-borderLight rounded-xl shadow-[0_4px_13px_rgba(0,0,0,0.05)] p-6 hidden mt-8">
+        <section id="visualizador-documental" class="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-cardBg border-2 border-borderLight rounded-xl shadow-[0_4px_13px_rgba(0,0,0,0.05)] p-6 hidden mt-8">
             
            <!-- Lado Esquerdo: Imagem do Manuscrito -->
             <div class="flex flex-col gap-4 border-r-0 lg:border-r-[3px] border-borderLight pr-0 lg:pr-6">
@@ -212,7 +212,7 @@
     
             <!-- Contentor do Zoom Interativo -->
             <!-- Alterado para bg-black e adicionada a classe 'group' -->
-                <div id="zoom-container" class="bg-black w-full h-[500px] border-2 border-borderLight rounded-lg overflow-hidden relative cursor-grab active:cursor-grabbing group">
+                <div id="zoom-container" class="bg-black w-full h-[400px] border-2 border-borderLight rounded-lg overflow-hidden relative cursor-grab active:cursor-grabbing group">
         
                     <!-- O ficheiro Favaios.png está ao mesmo nível do explorar.html -->
                         <img id="manuscrito-imagem" 
@@ -235,7 +235,7 @@
                 <h3 class="font-playfair text-xl text-brandRed tracking-[1px] border-b-2 border-borderLight pb-2">Transcrição Diplomática</h3>
                 
                 <!-- ESTE É O "PALCO": A div onde o XSLTProcessor vai injetar o HTML resultante -->
-                <div id="area-transcricao" class="overflow-y-auto h-[500px] pr-4 font-esteban text-base leading-relaxed text-textDark">
+                <div id="area-transcricao" class="overflow-y-auto h-[400px] pr-4 font-esteban text-base leading-relaxed text-textDark">
                     <!-- Conteúdo vazio, aguardando o JavaScript -->
                 </div>
             </div>
